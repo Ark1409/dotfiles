@@ -60,8 +60,8 @@
         "format-icons": ["", "", ""],
         "max-volume": 100,
         "tooltip-format": "Output: {node_name}",
-        "on-click-middle": "pwvucontrol",
-        "on-click-right": "easyeffects"
+        "on-click-middle": "easyeffects",
+        "on-click-right": "pwvucontrol"
     },
 
     "hyprland/workspaces": {
@@ -98,8 +98,8 @@
             "(.*) — Discord": " $1",
             "(.*) - FileZilla": " $1",
             "impala": "󱚾",
-            "(sudo )?pacman(.*)": "󰮯$2",
-            "(sudo )?yay(.*)": "󰮯$2"
+            "^(sudo )?pacman(.*)": "󰮯$2",
+            "^(sudo )?yay(.*)": "󰮯$2"
         }
     },
 
