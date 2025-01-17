@@ -1,0 +1,108 @@
+@define-color dark-blue #1f2335;
+@define-color dark-blue1 #24283b;
+@define-color dark-blue2 #292e42;
+@define-color dark-blue3 #3b4261;
+@define-color dark-blue4 #414868;
+
+@define-color gray #545c7e;
+@define-color gray1 #565f89;
+@define-color gray2 #737aa2;
+@define-color gray3 #a9b1d6;
+@define-color gray4 #c0caf5;
+
+@define-color blue #394b70;
+@define-color blue1 #3d59a1;
+@define-color blue2 #7aa2f7;
+@define-color blue3 #7dcfff;
+@define-color blue4 #c0caf5;
+
+@define-color purple #bb9af7;
+@define-color purple1 #9d7cd8;
+
+@define-color orange #ff9e64;
+@define-color orange1 #ffc777;
+
+@define-color green #c3e88d;
+@define-color green1 #4fd6be;
+@define-color green2 #ffc777;
+
+@define-color red #ff757f;
+@define-color red1 #c53b53;
+@define-color red2 #ff007c;
+
+* {
+    font-family: 'RobotoMono Nerd Font Propo', 'JetBrains Mono Nerd Font Propo', 'NotoSans Nerd Font Propo', 'Inter Nerd Font Propo';
+    font-size: 14px;
+}
+
+#window {
+    margin-top: -50px;
+    margin-bottom: -50px;
+}
+
+window#waybar {
+    color: @blue4;
+    background-color: transparent;
+
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+.modules-left {
+    margin-top: 5px;
+    margin-left: 10px;
+
+    background-color: @dark-blue;
+    padding: 0px 10px;
+    border-radius: 20px;
+    border: 1.5px solid @blue1;
+}
+
+.modules-center {
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    background-color: @dark-blue;
+    padding: 0px 50px;
+    border-radius: 20px;
+    border: 1.5px solid @blue1;
+}
+
+.modules-right {
+    margin-top: 5px;
+    margin-right: 10px;
+
+    background-color: @dark-blue;
+    padding: 0px 50px;
+    border-radius: 20px;
+    border: 1.5px solid @blue1;
+}
+
+#workspaces button {
+    margin: 0px 5px;
+    border-radius: 7px;
+    transition-property: background-color;
+    transition-duration: 2s;
+}
+
+#workspaces button.active {
+    color: @blue4;
+}
+
+#workspaces button:hover {
+    background-color: @dark-blue1;
+}
+
+#pulseaudio-slider trough, #backlight-slider trough {
+    min-height: 1px;
+    min-width: 80px;
+}
+
+#systemd-failed-units {
+    color: @red;
+}
+
+#systemd-failed-units.degraded {
+    color: @orange1;
+}
