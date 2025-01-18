@@ -16,14 +16,16 @@
     "modules-right": [
         "clock",
         "cava",
-        "wireplumber",
+        "pulseaudio",
+        //"wireplumber",
         "cpu",
         "memory",
         "battery",
         "network",
         "tray",
         "idle_inhibitor",
-        "systemd-failed-units"
+        "systemd-failed-units",
+        "custom/power-button",
     ],
 
     "cava": {
@@ -254,24 +256,28 @@
     },
 
     "pulseaudio": {
-        // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format": "{volume}% {icon}",
+        "format-alt": "{icon}",
+        "format-muted": "0% ",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth-muted": "0% {icon}",
         "format-source": "{volume}% ",
         "format-source-muted": "",
         "format-icons": {
             "headphone": "",
-            "hands-free": "",
-            "headset": "",
+            "hands-free": "",
+            "headset": "",
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "bluez_output.1C_52_16_EF_51_7A.1": "󱡏",
+            "bluez_output.1C_52_16_EF_51_7A.1-muted": "󱡐",
+            "default": ["", "", ""],
+            "default-muted": ""
         },
-        "on-click": "pavucontrol"
+        "on-click-right": "pwvucontrol"
     },
+
     "custom/media": {
         "format": "{icon} {text}",
         "return-type": "json",
@@ -284,8 +290,9 @@
         "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
         // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
     },
+
     "custom/power": {
-        "format" : "⏻ ",
+        "format" : "⏻",
         "tooltip": false,
         "menu": "on-click",
         "menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
@@ -295,5 +302,11 @@
             "suspend": "systemctl suspend",
             "hibernate": "systemctl hibernate"
         }
+    },
+
+    "custom/power-button": {
+        "format" : "⏻",
+        "tooltip": false,
+        "on-click": "wlogout",
     }
 }
