@@ -63,7 +63,7 @@ window#waybar {
     margin: 0px 3px;
     border-radius: 15px;
     transition-property: background-color;
-    transition-duration: 2s;
+    transition-duration: 1s;
 }
 
 #workspaces button.active {
@@ -71,7 +71,7 @@ window#waybar {
 }
 
 #workspaces button:hover {
-    background-color: @dark-blue1;
+    background-color: @dark-blue;
 }
 
 #pulseaudio-slider trough, #backlight-slider trough {

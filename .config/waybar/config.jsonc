@@ -18,11 +18,12 @@
         "clock",
         "cava",
         "pulseaudio",
+        "backlight",
         //"wireplumber",
         "cpu",
         "memory",
-        "battery",
         "network",
+        "battery",
         "tray",
         "idle_inhibitor",
         "systemd-failed-units",
@@ -209,8 +210,11 @@
 
     "backlight": {
         // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", ""]
+        "format": "{icon}",
+        "format-alt": "{percent}% {icon}",
+        "format-icons": ["", "", "", "", "", "", "", "", ""],
+        "scroll-step": 5.0,
+        "tooltip-format": "Brightness: {percent}%"
     },
 
     "battery": {
