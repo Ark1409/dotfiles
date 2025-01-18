@@ -11,7 +11,9 @@ shopt -s dotglob
 # We like color
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+
 alias lg='lazygit'
+alias ff='fastfetch'
 
 # Default PS1 if not using other prompt applications
 PS1='[\u@\h \W]\$ '
@@ -23,7 +25,7 @@ if [[ "$TERM" == "xterm-kitty" ]]; then
     eval "$(starship init bash)"
     eval "$(zoxide init bash)"
 
-    echo && pfetch | lolcat -F 0.08
+    echo && pfetch | lolcat -F 0.07
 fi
 
 # Yazi remap
