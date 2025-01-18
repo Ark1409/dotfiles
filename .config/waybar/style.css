@@ -42,46 +42,26 @@
 
 window#waybar {
     color: @blue4;
-    background-color: transparent;
-
+    background-color: alpha(@dark-blue1, 0.7);
     transition-property: background-color;
     transition-duration: .5s;
+    border-radius: 20px;
 }
 
 .modules-left {
-    margin-top: 5px;
     margin-left: 10px;
-
-    background-color: @dark-blue;
-    padding: 0px 10px;
-    border-radius: 20px;
-    border: 1.5px solid @blue1;
 }
 
 .modules-center {
-    margin-top: 5px;
-    margin-left: 10px;
-    margin-right: 10px;
-
-    background-color: @dark-blue;
-    padding: 0px 50px;
-    border-radius: 20px;
-    border: 1.5px solid @blue1;
 }
 
 .modules-right {
-    margin-top: 5px;
-    margin-right: 10px;
-
-    background-color: @dark-blue;
-    padding: 0px 50px;
-    border-radius: 20px;
-    border: 1.5px solid @blue1;
+    margin-right: 40px;
 }
 
 #workspaces button {
-    margin: 0px 5px;
-    border-radius: 7px;
+    margin: 0px 3px;
+    border-radius: 15px;
     transition-property: background-color;
     transition-duration: 2s;
 }

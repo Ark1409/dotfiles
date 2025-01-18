@@ -3,7 +3,8 @@
     "layer": "bottom", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
     "reload_style_on_change": true,
-    "spacing": 15,
+    "spacing": 12,
+    "margin": "5px 12px 0px 12px",
 
     "modules-left": [
         "hyprland/workspaces"
@@ -79,7 +80,7 @@
             "class<vesktop>": "",
             "code": "󰨞",
             "class<filezilla>": "",
-            "class<impala>": "󱚾"
+            "class<impala>": "󱚾",
         },
         "move-to-monitor": true
     },
@@ -101,7 +102,9 @@
             "(.*) - FileZilla": " $1",
             "impala": "󱚾",
             "^(sudo )?pacman(.*)": "󰮯$2",
-            "^(sudo )?yay(.*)": "󰮯$2"
+            "^(sudo )?yay(.*)": "󰮯$2",
+            "^(lg|lazygit)(.*)$": "$2",
+            "^(yazi|y)(.*)": "$2"
         }
     },
 
