@@ -97,6 +97,7 @@
             "code": "󰨞",
             "class<filezilla>": "",
             "class<impala>": "󱚾",
+            "class<jetbrains-idea>": ""
         },
         "move-to-monitor": true
     },
