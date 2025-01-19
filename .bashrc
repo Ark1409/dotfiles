@@ -14,6 +14,7 @@ alias grep='grep --color=auto'
 
 alias lg='lazygit'
 alias ff='fastfetch'
+alias fzf='fzf --preview="cat {}"'
 
 # Default PS1 if not using other prompt applications
 PS1='[\u@\h \W]\$ '
