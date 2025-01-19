@@ -91,8 +91,10 @@
         "rewrite": {
             "Mozilla Firefox": "󰈹",
             "(.*) — Mozilla Firefox": "󰈹 $1",
+            "(.*) - YouTube — Mozilla Firefox": " $1",
             "Mozilla Firefox Private Browsing": "󰈹",
             "(.*) — Mozilla Firefox Private Browsing": "󰈹 $1",
+            "(.*) - YouTube — Mozilla Firefox Private Browsing": " $1",
             "nvim (.*)": " $1",
             "^nvim$": "",
             "vim (.*)": " $1",
@@ -103,9 +105,9 @@
             "(.*) - FileZilla": " $1",
             "impala": "󱚾",
             "^(sudo )?pacman(.*)": "󰮯$2",
-            "^(sudo )?yay(.*)": "󰮯$2",
+            "^(sudo )?yay($| .*)": "󰮯$2",
             "^(lg|lazygit)(.*)$": "$2",
-            "^(yazi|y)(.*)": "$2"
+            "^(yazi|y)($| .*)": "$2"
         }
     },
 
