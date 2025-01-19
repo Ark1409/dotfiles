@@ -19,16 +19,28 @@
         "cava",
         "pulseaudio",
         "backlight",
-        //"wireplumber",
         "cpu",
         "memory",
         "network",
         "battery",
         "tray",
+        "custom/packages",
         "idle_inhibitor",
         "systemd-failed-units",
         "custom/power-button",
     ],
+
+    "custom/packages": {
+        "exec": "~/.config/waybar/custom_package.sh",
+        "interval": 600,
+        "format": "{} {icon}",
+        "format-alt": "{icon}",
+        "format-icons": [ "", "󰏔" ],
+        "return-type": "json",
+        "hide-empty-text": true,
+        "on-double-click-right": "kitty --hold /usr/bin/env bash -c 'yay && killall -35 waybar'",
+        "signal": 1,
+    },
 
     "cava": {
         "cava-config": "~/.config/cava/config",
@@ -46,8 +58,11 @@
     },
 
     "systemd-failed-units": {
-        "format": " {nr_failed}",
-        "hide-on-ok": true
+        "format": "{nr_failed} ",
+        "format-alt": "",
+        "hide-on-ok": true,
+        "tooltip": true,
+        "tooltip-format": "{nr_failed_user} failed user unit(s) / {nr_failed_system} failed system unit(s)",
     },
 
     "backlight/slider": {

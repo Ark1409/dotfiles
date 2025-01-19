@@ -16,6 +16,12 @@ alias lg='lazygit'
 alias ff='fastfetch'
 alias fzf='fzf --preview="cat {}"'
 
+# yay alias to update waybar module
+yay() {
+    command yay "$@"
+    killall -35 waybar &> /dev/null
+}
+
 # Default PS1 if not using other prompt applications
 PS1='[\u@\h \W]\$ '
 
