@@ -168,6 +168,10 @@ vim.opt.scrolloff = 5
 --  See `:help hlsearch`
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
+-- Page movement remaps
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
+
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
