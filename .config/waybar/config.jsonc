@@ -6,6 +6,7 @@
     "spacing": 12,
 
     "modules-left": [
+        "custom/logo",
         "hyprland/workspaces"
     ],
 
@@ -28,6 +29,10 @@
         "systemd-failed-units",
         "custom/power-button",
     ],
+
+    "custom/logo": {
+        "format": ""
+    },
 
     "custom/packages": {
         "exec": "~/.config/waybar/custom_package.sh",

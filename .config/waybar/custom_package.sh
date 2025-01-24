@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-update_output=$(checkupdates --nocolor)
+update_output=$(yay -Quq)
 update_count=$(wc -l <<< "$update_output")
 [[ -z $update_output ]] && update_count=0
 update_packages=$(sed 's/ .*//g' <<< "$update_output")

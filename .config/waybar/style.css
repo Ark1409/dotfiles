@@ -88,3 +88,9 @@ window#waybar {
 #systemd-failed-units.degraded {
     color: @orange1;
 }
+
+#custom-logo {
+    margin-left: 15px;
+    color: #1793d1;
+}
+
