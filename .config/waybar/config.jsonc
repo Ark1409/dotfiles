@@ -4,7 +4,6 @@
     "position": "top", // Waybar position (top|bottom|left|right)
     "reload_style_on_change": true,
     "spacing": 12,
-    "margin": "5px 12px 0px 12px",
 
     "modules-left": [
         "hyprland/workspaces"

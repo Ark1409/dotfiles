@@ -19,7 +19,7 @@ else
 fi
 
 tooltip+="\n\n$update_packages"
-tooltip=$(echo -n "$tooltip" | sed -z 's/\n/\\n/g')
+tooltip="$(echo -n "$tooltip" | sed -z 's/\n/\\n/g')"
 
 cat <<EOF
 {"text": "$update_count", "alt": "", "tooltip": "$tooltip", "class": "", "percentage": 100 }
