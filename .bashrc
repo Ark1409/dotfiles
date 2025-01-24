@@ -15,6 +15,7 @@ alias grep='grep --color=auto'
 alias lg='lazygit'
 alias ff='fastfetch'
 alias fzf='fzf --preview="cat {}"'
+alias yayf='yayfzf'
 
 # yay alias to update waybar module
 yay() {
