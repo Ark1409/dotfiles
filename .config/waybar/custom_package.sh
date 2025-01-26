@@ -1,18 +1,18 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 update_output=$(yay -Quq)
 update_count=$(wc -l <<< "$update_output")
-[[ -z $update_output ]] && update_count=0
+[ -z "$update_output" ] && update_count=0
 update_packages=$(sed 's/ .*//g' <<< "$update_output")
 
-if [[ $update_count == 0 ]]; then
+if [ $update_count = 0 ]; then
     cat <<< '{"text": "", "alt": "", "tooltip": "", "class": "", "percentage": 0 }'
     exit 0
 fi
 
 tooltip=""
 
-if [[ $update_count == 1 ]]; then
+if [ $update_count = 1 ]; then
     tooltip="$update_count pending package"
 else
     tooltip="$update_count pending packages"
