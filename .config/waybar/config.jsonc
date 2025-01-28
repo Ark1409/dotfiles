@@ -42,7 +42,7 @@
         "format-icons": [ "", "󰏔" ],
         "return-type": "json",
         "hide-empty-text": true,
-        "on-double-click-right": "kitty --hold /usr/bin/env bash -c 'yay && killall -35 waybar'",
+        "on-double-click-right": "kitty --hold /bin/sh -c 'yay && killall -35 waybar'",
         "signal": 1,
     },
 
