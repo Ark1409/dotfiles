@@ -15,12 +15,15 @@ alias grep='grep --color=auto'
 alias lg='lazygit'
 alias ff='fastfetch'
 alias fzf='fzf --preview="cat {}"'
-alias yayf='yayfzf'
+alias yf='yayfzf'
+alias xxdc='xxd -R always'
 
 # yay alias to update waybar module
 yay() {
     command yay "$@"
+    local _ret=$?
     killall -35 waybar &> /dev/null
+    return $_ret
 }
 
 # Yazi remap
@@ -38,6 +41,8 @@ PS1='[\u@\h \W]\$ '
 
 # Of course
 export EDITOR=nvim
+
+export ELECTRON_OZONE_PLATFORM_HINT=auto
 
 if [[ "$TERM" == "xterm-kitty" ]]; then
     eval "$(starship init bash)"
