@@ -42,8 +42,6 @@ PS1='[\u@\h \W]\$ '
 # Of course
 export EDITOR=nvim
 
-export ELECTRON_OZONE_PLATFORM_HINT=auto
-
 if [[ "$TERM" == "xterm-kitty" ]]; then
     eval "$(starship init bash)"
     eval "$(zoxide init bash)"
