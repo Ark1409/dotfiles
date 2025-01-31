@@ -101,7 +101,8 @@
             "code": "󰨞",
             "class<filezilla>": "",
             "class<impala>": "󱚾",
-            "class<jetbrains-idea>": ""
+            "class<jetbrains-idea>": "",
+            "class<clipse>": ""
         },
         "move-to-monitor": true
     },
@@ -114,7 +115,7 @@
             "(.*) - YouTube — Mozilla Firefox$": " $1",
             "Mozilla Firefox Private Browsing$": "󰈹",
             "(.*) — Mozilla Firefox Private Browsing$": "󰈹 $1",
-            "(.*) - YouTube — Mozilla Firefox Private Browsing": " $1",
+            "(.*) - YouTube — Mozilla Firefox Private Browsing$": " $1",
             "nvim (.*)": " $1",
             "^nvim$": "",
             "vim (.*)": " $1",
@@ -127,7 +128,8 @@
             "^(sudo )?pacman(.*)": "󰮯$2",
             "^(sudo )?yay(f(zf)?)?($| .*)": "󰮯$4",
             "^(lg|lazygit)(.*)$": "$2",
-            "^(yazi|y)($| .*)": "$2"
+            "^(yazi|y)($| .*)": "$2",
+            "^clipse$": ""
         }
     },
 
