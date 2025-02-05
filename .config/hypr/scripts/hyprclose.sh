@@ -1,7 +1,7 @@
 #!/bin/sh
 
 mkfile() {
-    mkdir -p "$(dirname $1)" || return
+    mkdir -p "$(dirname "$1")" || return
     [ -f "$1" ] || touch "$1"
 }
 
@@ -14,5 +14,6 @@ for i in "$(seq 1 3)"; do
 done
 
 systemctl --user stop hyprpolkitagent
+systemctl --user stop swaync
 
 sleep 0.25 && hyprctl dispatch exit
