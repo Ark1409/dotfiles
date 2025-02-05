@@ -1,0 +1,10 @@
+show=drun
+allow_images=true
+matching=fuzzy
+insensitive=true
+term=kitty
+prompt=Search
+hide_scroll=true
+key_expand=Ctrl-Tab
+key_forward=Ctrl-j
+key_backward=Ctrl-k
