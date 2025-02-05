@@ -11,12 +11,12 @@ shopt -s dotglob
 # We like color
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
+alias xxdc='xxd -R always'
 
 alias lg='lazygit'
 alias ff='fastfetch'
 alias fzf='fzf --preview="cat {}"'
 alias yf='yayfzf'
-alias xxdc='xxd -R always'
 
 # yay alias to update waybar module
 yay() {
@@ -42,7 +42,7 @@ PS1='[\u@\h \W]\$ '
 # Of course
 export EDITOR=nvim
 
-if [[ "$TERM" == "xterm-kitty" ]]; then
+if [[ "$TERM" =~ ^xterm- ]]; then
     eval "$(starship init bash)"
     eval "$(zoxide init bash)"
     eval "$(fzf --bash)"
