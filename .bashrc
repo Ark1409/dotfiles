@@ -17,6 +17,7 @@ alias lg='lazygit'
 alias ff='fastfetch'
 alias fzf='fzf --preview="cat {}"'
 alias yf='yayfzf'
+alias clock='tty-clock -cstB -C 4'
 
 # yay alias to update waybar module
 yay() {
