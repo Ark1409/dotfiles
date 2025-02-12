@@ -8,6 +8,9 @@
 # Allow dotfiles to be caught in glob
 shopt -s dotglob
 
+# YES
+set -o vi
+
 # We like color
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
