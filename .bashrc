@@ -18,7 +18,7 @@ alias xxdc='xxd -R always'
 
 alias lg='lazygit'
 alias ff='fastfetch'
-alias fzf='fzf --preview="cat {}"'
+alias fzf="fzf --preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 alias yf='yayfzf'
 alias clock='tty-clock -cstB -C 4'
 
@@ -50,6 +50,12 @@ if [[ "$TERM" =~ ^xterm- ]]; then
     eval "$(starship init bash)"
     eval "$(zoxide init bash)"
     eval "$(fzf --bash)"
+
+    export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
+    export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
+    export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+
+    alias fzf="fzf --preview '(highlight -O xterm256 {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 
     echo && pfetch | lolcat -F 0.07
 fi
