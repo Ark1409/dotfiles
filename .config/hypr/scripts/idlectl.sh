@@ -11,11 +11,6 @@ Manages stages of screen idle process.
 EOF
 }
 
-if [ "$#" != 1 ]; then
-    print_help
-    exit 1
-fi
-
 case "$1" in
     0)
         hyprctl dispatch dpms on
