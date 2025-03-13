@@ -15,8 +15,8 @@
     ],
 
     "modules-right": [
-        "clock",
         "cava",
+        "clock",
         "pulseaudio",
         "backlight",
         "cpu",
