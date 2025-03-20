@@ -1,5 +1,8 @@
 return {
     "kylechui/nvim-surround",
-    version = "*",
-    event = "InsertEnter"
+    version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
+    event = "InsertEnter",
+    config = function()
+        require("nvim-surround").setup{}
+    end
 }

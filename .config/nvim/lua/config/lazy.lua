@@ -22,4 +22,4 @@ require("lazy").setup({
   checker = { enabled = false },
 })
 
-vim.keymap.set('n', "<leader>ol", "<cmd>Lazy<CR>", { desc = "[O]pen [L]azy" })
+vim.keymap.set('n', "<leader>ol", vim.cmd.Lazy, { desc = "[O]pen [L]azy" })

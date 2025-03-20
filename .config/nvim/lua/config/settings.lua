@@ -4,8 +4,8 @@ vim.g.maplocalleader = "\\"
 -- util
 vim.g.nerd_font = true
 
-vim.opt.number = true
-vim.opt.relativenumber = true
+vim.opt.number = false
+vim.opt.relativenumber = false
 vim.opt.mouse = "a"
 
 vim.opt.undofile = true
@@ -42,16 +42,21 @@ vim.opt.shiftwidth = 4
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<Esc>", vim.cmd.nohlsearch)
 vim.keymap.set({ "n", "x" }, "<leader>sp", "\"+p")
 vim.keymap.set("n", "<leader>sP", "\"+P", { noremap = true })
 vim.keymap.set({ "n", "x" }, "<leader>sy", "\"+y")
 
-vim.keymap.set("x", "<leader>p", "\"_dP")
 vim.keymap.set({ "n", "x" }, "<leader>y", "\"+y")
 
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
+-- vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
+-- vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
+
+vim.keymap.set("n", "<C-u>", "<NOP>", { noremap = true })
+vim.keymap.set("n", "<C-d>", "<NOP>", { noremap = true })
+
+-- vim.keymap.set("n", "<C-f>", "<C-f>zz", { noremap = true })
+-- vim.keymap.set("n", "<C-b>", "<C-b>zz", { noremap = true })
 
 vim.keymap.set("n", "<leader>riw", ":%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>", { noremap = true })
 vim.keymap.set("n", "<leader>riW", ":%s/<C-r><C-a>/<C-r><C-a>/gI<Left><Left><Left>", { noremap = true })
@@ -60,20 +65,34 @@ vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { noremap = true, desc = "Exit 
 
 vim.keymap.set("n", "<leader>ff", "gg=G<C-o>", { noremap = true, desc = "[F]ormat: [F]ile" })
 
+vim.keymap.set("v", ">", ">gv", { noremap = true })
+vim.keymap.set("v", "<", "<gv", { noremap = true })
+
+vim.keymap.set("x", "<C-J>", ":m '>+1<CR>gv", { noremap = true })
+vim.keymap.set("x", "<C-K>", ":m '<-2<CR>gv", { noremap = true })
+
 do
     local yank_augroup = vim.api.nvim_create_augroup("yank-augroup", { clear = true })
 
     vim.api.nvim_create_autocmd("TextYankPost", {
         group = yank_augroup,
         callback = function()
-            vim.highlight.on_yank{ timeout = 100 }
+            vim.highlight.on_yank { timeout = 100 }
         end
     })
 end
 
-vim.diagnostic.config{
+vim.diagnostic.config {
     underline = true,
     virtual_text = false,
     severity_sort = true,
     update_in_insert = true
 }
+
+vim.keymap.set("n", "<leader>tvt", function()
+    local old_table = vim.diagnostic.config()
+    local new_table = vim.tbl_deep_extend("force", old_table, { virtual_text = old_table and not old_table.virtual_text or false })
+    vim.diagnostic.config(new_table)
+end, { desc = '[T]oggle [V]irtual [T]ext'})
+
+vim.keymap.set('n', "<C-S-e>", vim.cmd.Sex)

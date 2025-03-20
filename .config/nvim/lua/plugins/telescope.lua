@@ -43,8 +43,8 @@ return {
         vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
         vim.keymap.set("n", "<leader>sf", function() builtin.find_files({ hidden = true }) end, { desc = "[S]earch [F]iles" })
         vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
-        vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch Live [G]rep" })
-        vim.keymap.set("n", "<leader>sG", builtin.git_files, { desc = "[S]earch [G]it Files" })
+        vim.keymap.set("n", "<leader>sG", builtin.live_grep, { desc = "[S]earch Live [G]rep" })
+        vim.keymap.set("n", "<leader>sg", builtin.git_files, { desc = "[S]earch [G]it Files" })
         vim.keymap.set("n", "<leader>gs", builtin.git_status, { desc = "View [G]it [S]tatus" })
         vim.keymap.set("n", '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
         vim.keymap.set("n", '<leader>se', builtin.diagnostics, { desc = '[S]earch Diagnostics ([E]rrors)' }) -- though they can be warnings, info, etc...
@@ -61,6 +61,7 @@ return {
         vim.keymap.set("n", "<leader>ft", builtin.filetypes, { desc = 'Set [F]ile[t]ype' })
         vim.keymap.set("n", "<leader>ts", builtin.treesitter, { desc = 'Open [T]ree[s]itter' })
         vim.keymap.set("n", "<leader>sH", builtin.search_history, { desc = 'Open [S]earch [H]istory' })
+        vim.keymap.set("n", "<leader>qf", builtin.quickfix, { desc = 'Open [Q]uick [F]ix List' })
 
         vim.keymap.set("n", "<leader>ot", builtin.builtin, { desc = "[O]pen [T]elescope" })
 
@@ -86,6 +87,6 @@ return {
         end, { desc = "[S]earch [C]onfig files" })
     end,
 
-    event = "VimEnter",
+    event = "VeryLazy",
     lazy = true
 }

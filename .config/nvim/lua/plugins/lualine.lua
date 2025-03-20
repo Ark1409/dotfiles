@@ -9,6 +9,5 @@ return {
     init = function()
         vim.opt.showmode = false
     end,
-    config = true,
     event = "VimEnter"
 }

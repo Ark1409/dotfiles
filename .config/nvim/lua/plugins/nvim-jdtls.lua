@@ -91,6 +91,6 @@ return {
                 end
             })
     end,
-    event = "VeryLazy",
+    event = { "BufReadPost", "VeryLazy" },
     lazy = true
 }

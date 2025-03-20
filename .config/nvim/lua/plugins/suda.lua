@@ -1,5 +1,5 @@
 return {
     "lambdalisue/vim-suda",
-    event = "CmdlineEnter",
+    cmd = { "SudaWrite", "SudaRead" },
     lazy = true
 }

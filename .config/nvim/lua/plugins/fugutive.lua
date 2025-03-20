@@ -1,5 +1,5 @@
 return {
     "tpope/vim-fugitive",
-    event = "CmdlineEnter",
+    cmd = { "Git" },
     lazy = true
 }

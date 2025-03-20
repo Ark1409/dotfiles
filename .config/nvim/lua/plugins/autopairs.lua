@@ -1,6 +1,5 @@
 return {
     "windwp/nvim-autopairs",
-    event = "InsertEnter",
     dependencies = {
         "hrsh7th/nvim-cmp"
     },
@@ -14,5 +13,6 @@ return {
             'confirm_done',
             cmp_autopairs.on_confirm_done()
         )
-    end
+    end,
+    event = "InsertEnter"
 }

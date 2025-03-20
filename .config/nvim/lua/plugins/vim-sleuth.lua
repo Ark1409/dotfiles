@@ -1,6 +1,7 @@
 -- Indent detection
 return {
     "tpope/vim-sleuth",
-    event = "InsertEnter",
+    event = { "InsertEnter" },
+    cmd = "Sleuth",
     lazy = true
 }
