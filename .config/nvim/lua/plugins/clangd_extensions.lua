@@ -1,7 +1,7 @@
 return {
     "p00f/clangd_extensions.nvim",
-    init = function()
-        vim.keymap.set('n', "<leader>sI", vim.cmd.ClangdSwitchSourceHeader, { desc = "[S]witch [I]mplementation" })
+    config = function()
+        vim.keymap.set('n', "<C-7>", vim.cmd.ClangdSwitchSourceHeader, { desc = "clangd: Switch Implementation" })
     end,
     event = "LspAttach",
     lazy = true

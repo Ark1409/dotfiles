@@ -49,24 +49,24 @@ vim.keymap.set({ "n", "x" }, "<leader>sy", "\"+y")
 
 vim.keymap.set({ "n", "x" }, "<leader>y", "\"+y")
 
--- vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
--- vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { noremap = true })
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { noremap = true })
 
-vim.keymap.set("n", "<C-u>", "<NOP>", { noremap = true })
-vim.keymap.set("n", "<C-d>", "<NOP>", { noremap = true })
+-- vim.keymap.set("n", "<C-u>", "<NOP>", { noremap = true })
+-- vim.keymap.set("n", "<C-d>", "<NOP>", { noremap = true })
 
 -- vim.keymap.set("n", "<C-f>", "<C-f>zz", { noremap = true })
 -- vim.keymap.set("n", "<C-b>", "<C-b>zz", { noremap = true })
 
-vim.keymap.set("n", "<leader>riw", ":%s/<C-r><C-w>/<C-r><C-w>/gI<Left><Left><Left>", { noremap = true })
-vim.keymap.set("n", "<leader>riW", ":%s/<C-r><C-a>/<C-r><C-a>/gI<Left><Left><Left>", { noremap = true })
+vim.keymap.set("n", "<leader>riw", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", { noremap = true })
+vim.keymap.set("n", "<leader>riW", ":%s/\\<<C-r><C-a>\\>/<C-r><C-a>/gI<Left><Left><Left>", { noremap = true })
 
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { noremap = true, desc = "Exit terminal mode" })
 
-vim.keymap.set("n", "<leader>ff", "gg=G<C-o>", { noremap = true, desc = "[F]ormat: [F]ile" })
+-- vim.keymap.set("n", "<leader>ff", "gg=G<C-o>", { noremap = true, desc = "[F]ormat: [F]ile" })
 
-vim.keymap.set("v", ">", ">gv", { noremap = true })
-vim.keymap.set("v", "<", "<gv", { noremap = true })
+vim.keymap.set("x", ">", ">gv", { noremap = true })
+vim.keymap.set("x", "<", "<gv", { noremap = true })
 
 vim.keymap.set("x", "<C-J>", ":m '>+1<CR>gv", { noremap = true })
 vim.keymap.set("x", "<C-K>", ":m '<-2<CR>gv", { noremap = true })
@@ -91,8 +91,12 @@ vim.diagnostic.config {
 
 vim.keymap.set("n", "<leader>tvt", function()
     local old_table = vim.diagnostic.config()
-    local new_table = vim.tbl_deep_extend("force", old_table, { virtual_text = old_table and not old_table.virtual_text or false })
+    local new_table = vim.tbl_deep_extend("force", old_table, { virtual_text = old_table and not old_table.virtual_text })
     vim.diagnostic.config(new_table)
 end, { desc = '[T]oggle [V]irtual [T]ext'})
 
-vim.keymap.set('n', "<C-S-e>", vim.cmd.Sex)
+vim.keymap.set('n', "<C-S-e>", function()
+    vim.cmd.Lex()
+    local netrw_window = vim.api.nvim_get_current_win()
+    vim.api.nvim_win_set_width(netrw_window, 40)
+end)

@@ -6,7 +6,8 @@ return {
             theme = "onedark"
         }
     },
-    init = function()
+    config = function(_, opts)
+        require("lualine").setup(opts)
         vim.opt.showmode = false
     end,
     event = "VimEnter"

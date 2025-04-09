@@ -79,5 +79,6 @@ return {
         vim.keymap.set({ "n", "x", "o" }, "[h", prev_hunk_repeat)
     end,
     event = { "BufReadPost", "InsertLeave" },
-    lazy = true
+    lazy = true,
+    cond = false
 }

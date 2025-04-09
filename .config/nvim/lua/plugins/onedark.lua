@@ -11,7 +11,7 @@ return {
             undercurl = false,
             background = false
         },
-        toggle_style_key = "<leader>ts",
+        toggle_style_key = "<leader>ots",
         ending_tildes = true,
         lualine = {
             transparent = false
@@ -24,5 +24,9 @@ return {
     config = function(_, opts)
         require('onedark').setup(opts)
         require('onedark').load()
+    end,
+    cond = function()
+        local TERM = vim.env.TERM
+        return TERM and TERM ~= 'linux'
     end,
 }

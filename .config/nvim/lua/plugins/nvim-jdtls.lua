@@ -54,8 +54,7 @@ return {
                             '-jar', launcher_jar,
                             '-configuration', vim.fs.joinpath(jdtls_dir, '/config_linux'),
 
-                            '-data', vim.fs.joinpath(vim.fn.stdpath('cache'), '/jdtls/workspace/',
-                            vim.fn.fnamemodify(root_dir, ':p:~'))
+                            '-data', vim.fs.joinpath(vim.fn.stdpath('cache'), '/jdtls/workspace/', vim.fn.fnamemodify(root_dir, ':p'))
                         },
 
                         -- 💀

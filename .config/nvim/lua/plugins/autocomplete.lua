@@ -23,7 +23,8 @@ return {
             end
         },
         "saadparwaiz1/cmp_luasnip",
-        "p00f/clangd_extensions.nvim"
+        "p00f/clangd_extensions.nvim",
+        "onsails/lspkind.nvim",
     },
     config = function()
         local cmp = require("cmp")
@@ -53,6 +54,7 @@ return {
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<C-Space>'] = cmp.mapping.complete(),
+                ['<C-X><C-o>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<C-y>'] = cmp.mapping.confirm({ select = true }),
 

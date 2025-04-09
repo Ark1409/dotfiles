@@ -20,7 +20,7 @@ return {
         signs_staged_enable = true,
         signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
     },
-    init = function()
+    config = function(_, opts)
         vim.keymap.set('n', "<leader>ogs", "<cmd>Gitsigns<CR>", { noremap = true, desc = "[O]pen [G]it[s]igns" })
         vim.keymap.set('n', "<leader>gsr", "<cmd>Gitsigns refresh<CR>", { noremap = true, desc = "[G]itsigns: [R]efresh" })
         vim.keymap.set('n', "<leader>gtb", "<cmd>Gitsigns toggle_current_line_blame<CR>", { noremap = true, desc = "[G]itsigns: [T]oggle Line [B]lame" })
@@ -35,8 +35,7 @@ return {
         vim.keymap.set('n', "]h", "<cmd>Gitsigns next_hunk<CR>", { noremap = true, desc = "Gitsigns Next Hunk" })
         vim.keymap.set('n', "[h", "<cmd>Gitsigns prev_hunk<CR>", { noremap = true, desc = "Gitsigns Previous Hunk" })
         vim.keymap.set('n', "<leader>gvh", "<cmd>Gitsigns preview_hunk<CR>", { noremap = true, desc = "[G]itsigns: Pre[v]iew [H]unk" })
-    end,
-    config = function(_, opts)
+
         local git_signs = require("gitsigns")
         git_signs.setup(opts)
         git_signs.toggle_current_line_blame(true)

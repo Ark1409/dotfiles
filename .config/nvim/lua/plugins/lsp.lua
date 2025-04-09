@@ -16,7 +16,8 @@ return {
                             }
                         }
                     },
-                    init = function()
+                    config = function(_, opts)
+                        require("mason").setup(opts)
                         vim.keymap.set("n", "<leader>om", vim.cmd.Mason, { desc = "[O]pen [M]ason" })
                     end
                 }
@@ -35,9 +36,7 @@ return {
             callback = function(args)
                 local client = vim.lsp.get_client_by_id(args.data.client_id)
 
-                if not client then
-                    return
-                end
+                if not client then return end
 
                 -- Highlight references on cursor hold
                 if client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, { bufnr = args.buf }) then
@@ -157,6 +156,8 @@ return {
                         "[G]o to [T]ype [D]efinition", { "n", "v" })
                     map("<leader>gr", require('omnisharp_extended').telescope_lsp_references, "[G]o to [R]eferences",
                         { "n", "v" })
+                    map("gr", require('omnisharp_extended').telescope_lsp_references, "[G]o to [R]eferences",
+                        { "n", "v" })
                     map('gI', require('omnisharp_extended').telescope_lsp_implementation, "[G]o to [I]mplementation")
                 else
                     map('gd', require('telescope.builtin').lsp_definitions, "[G]o to [D]efinition", { "n", "v" })
@@ -165,6 +166,7 @@ return {
                     map("gtd", require("telescope.builtin").lsp_type_definitions, "[G]o to [T]ype [D]efinition",
                         { "n", "v" })
                     map("<leader>gr", require("telescope.builtin").lsp_references, "[G]o to [R]eferences", { "n", "v" })
+                    map("gr", require("telescope.builtin").lsp_references, "[G]o to [R]eferences", { "n", "v" })
                     map('gI', require('telescope.builtin').lsp_implementations, "[G]o to [I]mplementation")
                 end
 
@@ -175,8 +177,8 @@ return {
                 map('<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch [S]ymbols')
                 map('<leader>sws', require('telescope.builtin').lsp_dynamic_workspace_symbols,
                     '[S]earch [W]orkspace [S]ymbols')
-                map('<leader>sd', require('telescope.builtin').diagnostics, '[S]earch [D]iagnostics') -- though they can be warnings, info, etc...
-                map('<leader>ff', function() vim.lsp.buf.format { async = true } end, '[F]ormat: [F]ile')
+                -- map('<leader>sd', require('telescope.builtin').diagnostics, '[S]earch [D]iagnostics')
+                -- map('<leader>ff', function() vim.lsp.buf.format { async = true } end, '[F]ormat: [F]ile')
                 map("<leader>dt", function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end,
                     "Toggle [D]iagnostics", { "n", "v" })
                 map("<leader>do", vim.diagnostic.open_float, "[D]iagnostics [O]pen", { "n", "v" })
@@ -194,8 +196,8 @@ return {
 
                 if client.name == 'jdtls' then
                     map("<leader>fo", require('jdtls').organize_imports, "[F]ormat: [O]rganize Imports", { "n", "v" })
-                    map("<leader>gs", require('jdtls').super_implementation, "[G]o to [S]uper Implementation",
-                        { "n", "v" })
+                    map("gs", require('jdtls').super_implementation, "[G]o to [S]uper Implementation",
+                        { "n", "v" }) -- why would i ever use `gs` to sleep
                 end
             end,
         })
