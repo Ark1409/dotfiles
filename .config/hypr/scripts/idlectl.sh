@@ -1,8 +1,8 @@
 #!/bin/sh
 
-prog_name=$(basename "$0")
-
 print_help() {
+    local prog_name=$(basename "$0")
+
     cat <<EOF
 usage: $prog_name [level]
 Manages stages of screen idle process.
