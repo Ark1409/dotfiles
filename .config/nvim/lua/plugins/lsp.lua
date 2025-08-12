@@ -1,12 +1,11 @@
 return {
     "neovim/nvim-lspconfig",
-
     dependencies = {
         {
-            "williamboman/mason-lspconfig.nvim",
+            "mason-org/mason-lspconfig.nvim",
             dependencies = {
                 {
-                    "williamboman/mason.nvim",
+                    "mason-org/mason.nvim",
                     opts = {
                         ui = {
                             icons = {
@@ -24,13 +23,17 @@ return {
             },
         },
         "nvim-telescope/telescope.nvim",
-        "hrsh7th/cmp-nvim-lsp",
+        -- "hrsh7th/cmp-nvim-lsp",
         "Hoffs/omnisharp-extended-lsp.nvim",
+        -- "Decodetalkers/csharpls-extended-lsp.nvim",
         { "j-hui/fidget.nvim", opts = {} }
     },
 
     config = function()
-        -- Lsp Attach config
+        -- require("telescope").load_extension("csharpls_definition")
+        -- require("csharpls_extended").buf_read_cmd_bind()
+
+        -- LSP Attach config
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
             callback = function(args)
@@ -39,7 +42,7 @@ return {
                 if not client then return end
 
                 -- Highlight references on cursor hold
-                if client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, { bufnr = args.buf }) then
+                if client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, args.buf) then
                     local lsp_buf_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = true })
 
                     local diag_namespace = vim.api.nvim_create_namespace("lsp-cursorhold")
@@ -81,14 +84,14 @@ return {
 
                                 if has_diag then
                                     vim.diagnostic.open_float { bufnr = args2.buf, scope = 'cursor' }
-                                elseif client.supports_method(vim.lsp.protocol.Methods.textDocument_hover) then
+                                elseif client.supports_method(vim.lsp.protocol.Methods.textDocument_hover, args2.buf) then
                                     vim.lsp.buf.hover()
                                 end
                             end
 
                             if hover_timer then
                                 hover_timer:stop()
-                                hover_timer:start(3000, 0, vim.schedule_wrap(show_diags_callback))
+                                hover_timer:start(10000, 0, vim.schedule_wrap(show_diags_callback))
                             end
                         end,
                         buffer = args.buf
@@ -140,39 +143,54 @@ return {
                     })
                 end
 
+                local should_autofold = true
+                if should_autofold then
+                    vim.api.nvim_create_autocmd("LspNotify", {
+                        group = vim.api.nvim_create_augroup("lsp-notify", { clear = true }),
+                        callback = function(args2)
+                            if args2.data.method == vim.lsp.protocol.Methods.textDocument_didOpen then
+                                if client.supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange) then
+                                    if vim.bo.filetype == 'cs' then
+                                        local win_id = vim.api.nvim_get_current_win()
+                                        vim.wo[win_id][0].foldmethod = 'expr'
+                                        vim.wo[win_id][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+                                        vim.wo[win_id][0].foldlevel = 9999
+                                        -- vim.print("Closing all region and import folds...")
+                                        vim.lsp.foldclose('region', win_id)
+                                        vim.lsp.foldclose('imports', win_id)
+                                    end
+                                end
+                            end
+                        end,
+                        buffer = args.buf
+                    })
+                end
+
                 local map = function(keys, func, desc, mode)
                     mode = mode or 'n'
                     vim.keymap.set(mode, keys, func, { buffer = args.buf, desc = 'LSP: ' .. desc })
                 end
 
-                map('<leader>ca', vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "v" })
-
                 if client and client.name == 'omnisharp' then
                     map('gd', require('omnisharp_extended').telescope_lsp_definition, "[G]o to [D]efinition",
                         { "n", "v" })
-                    map("<leader>gD", require('omnisharp_extended').telescope_lsp_type_definition,
-                        "[G]o to [T]ype [D]efinition", { "n", "v" })
                     map("gtd", require('omnisharp_extended').telescope_lsp_type_definition,
                         "[G]o to [T]ype [D]efinition", { "n", "v" })
                     map("<leader>gr", require('omnisharp_extended').telescope_lsp_references, "[G]o to [R]eferences",
                         { "n", "v" })
-                    map("gr", require('omnisharp_extended').telescope_lsp_references, "[G]o to [R]eferences",
+                    map("grr", require('omnisharp_extended').telescope_lsp_references, "[G]o to [R]eferences",
                         { "n", "v" })
-                    map('gI', require('omnisharp_extended').telescope_lsp_implementation, "[G]o to [I]mplementation")
+                    map('gri', require('omnisharp_extended').telescope_lsp_implementation, "[G]o to [I]mplementation")
                 else
                     map('gd', require('telescope.builtin').lsp_definitions, "[G]o to [D]efinition", { "n", "v" })
-                    map("<leader>gD", require("telescope.builtin").lsp_type_definitions, "[G]o to [T]ype [D]efinition",
-                        { "n", "v" })
                     map("gtd", require("telescope.builtin").lsp_type_definitions, "[G]o to [T]ype [D]efinition",
                         { "n", "v" })
-                    map("<leader>gr", require("telescope.builtin").lsp_references, "[G]o to [R]eferences", { "n", "v" })
-                    map("gr", require("telescope.builtin").lsp_references, "[G]o to [R]eferences", { "n", "v" })
-                    map('gI', require('telescope.builtin').lsp_implementations, "[G]o to [I]mplementation")
+                    map("grr", require("telescope.builtin").lsp_references, "[G]o to [R]eferences", { "n", "v" })
+                    map('gri', require('telescope.builtin').lsp_implementations, "[G]o to [I]mplementation")
                 end
 
                 map('gD', vim.lsp.buf.declaration, "[G]o to [D]eclaration", { "n", "v" })
 
-                map('<leader>rn', vim.lsp.buf.rename, "[R]e[n]ame", { "n", "v" })
                 map('<leader>td', require('telescope.builtin').lsp_type_definitions, '[T]ype [D]efinition', { "n", "v" })
                 map('<leader>ss', require('telescope.builtin').lsp_document_symbols, '[S]earch [S]ymbols')
                 map('<leader>sws', require('telescope.builtin').lsp_dynamic_workspace_symbols,
@@ -181,13 +199,14 @@ return {
                 -- map('<leader>ff', function() vim.lsp.buf.format { async = true } end, '[F]ormat: [F]ile')
                 map("<leader>dt", function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end,
                     "Toggle [D]iagnostics", { "n", "v" })
-                map("<leader>do", vim.diagnostic.open_float, "[D]iagnostics [O]pen", { "n", "v" })
                 map("<leader>ds", vim.diagnostic.open_float, "[D]iagnostics [S]how", { "n", "v" })
                 map("<leader>dc", vim.diagnostic.hide, "[D]iagnostics [C]lose", { "n", "v" })
-                map('<leader>gic', require('telescope.builtin').lsp_incoming_calls, '')
-                map('<leader>goc', require('telescope.builtin').lsp_outgoing_calls, '')
+                map('gric', require('telescope.builtin').lsp_incoming_calls, '[I]ncoming [C]alls')
+                map('groc', require('telescope.builtin').lsp_outgoing_calls, '[O]utgoing [C]alls')
 
-                if client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, { bufnr = args.buf }) then
+                map('<leader>sad', vim.diagnostic.setqflist, '{S}earch [A]ll [D]iagnostics')
+
+                if client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint, args.buf) then
                     map("<leader>th", function()
                         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = args.buf }))
                     end, "[T]oggle Inlay [H]ints")
@@ -196,18 +215,18 @@ return {
 
                 if client.name == 'jdtls' then
                     map("<leader>fo", require('jdtls').organize_imports, "[F]ormat: [O]rganize Imports", { "n", "v" })
-                    map("gs", require('jdtls').super_implementation, "[G]o to [S]uper Implementation",
+                    map("grs", require('jdtls').super_implementation, "[G]o to [S]uper Implementation",
                         { "n", "v" }) -- why would i ever use `gs` to sleep
                 end
             end,
         })
 
-        local cap = vim.lsp.protocol.make_client_capabilities()
-        cap = vim.tbl_deep_extend("force", cap, require("cmp_nvim_lsp").default_capabilities())
+        local default_cap = vim.lsp.protocol.make_client_capabilities()
+        local cap = vim.tbl_deep_extend("force", {}, default_cap, require("cmp_nvim_lsp").default_capabilities())
 
         local handlers = {
             function(server_name)
-                require("lspconfig")[server_name].setup {
+                return {
                     capabilities = cap
                 }
             end,
@@ -215,40 +234,107 @@ return {
             ["jdtls"] = function() end, -- jdtls handled by nvim-jdtls
 
             ["bashls"] = function()
-                require("lspconfig").bashls.setup {
+                return {
                     capabilities = cap,
-                    filetypes = { "bash", "sh", "*.sh" }
+                    filetypes = { "bash", "sh" }
                 }
             end,
 
             ["clangd"] = function()
-                require("lspconfig").clangd.setup {
+                return {
                     filetypes = { "h", "hpp", "tcc", "c", "cpp", "objc", "objcpp", "cuda", "proto" },
                     capabilities = cap
                 }
             end,
 
+            -- ["csharp_ls"] = function()
+            --     return {
+            --         root_dir = function(bufnr, on_dir)
+            --             local fname = vim.api.nvim_buf_get_name(bufnr)
+            --             local util = require('lspconfig.util')
+            --             on_dir(util.root_pattern '*.slnf' (fname) or util.root_pattern '*.sln' (fname))
+            --         end,
+            --         handlers = {
+            --             ["textDocument/definition"] = require('csharpls_extended').definition,
+            --             ["textDocument/typeDefinition"] = require('csharpls_extended').type_definition,
+            --         },
+            --     };
+            -- end
+
             ["omnisharp"] = function()
-                local config = {
+                return {
                     handlers = {
                         ["textDocument/definition"] = require('omnisharp_extended').definition_handler,
                         ["textDocument/typeDefinition"] = require('omnisharp_extended').type_definition_handler,
                         ["textDocument/references"] = require('omnisharp_extended').references_handler,
                         ["textDocument/implementation"] = require('omnisharp_extended').implementation_handler,
                     },
-                    capabilities = cap
+                    capabilities = cap,
+                    root_markers = { ".slnf", ".sln", ".csproj", "omnisharp.json", "function.json" },
+                    settings = {
+                        FormattingOptions = {
+                            OrganizeImports = true
+                        },
+                        RoslynExtensionsOptions = {
+                            EnableAnalyzersSupport = true,
+                            AnalyzeOpenDocumentsOnly = true,
+                            EnableImportCompletion = true,
+                            EnableDecompilationSupport = true,
+                            enableDecompilationSupport = true
+                        }
+                    }
                 }
-                require("lspconfig").omnisharp.setup(config)
             end
         };
 
+        -- Servers to be automagically installed and configured
+        local auto_servers = { "jdtls", "clangd", "lua_ls", "bashls", "cmake", "asm_lsp", "ts_ls", "eslint", "emmet_language_server",
+            "omnisharp"
+        };
+
+        do
+            local config_servers = vim.tbl_extend('force', {}, auto_servers);
+
+            for server, _ in pairs(handlers) do
+                if type(server) == 'string' then
+                    table.insert(config_servers, server)
+                end
+            end
+
+            for _, server in ipairs(config_servers) do
+                local config_table = nil;
+
+                do
+                    local func = handlers[server]
+                    if func ~= nil then
+                        config_table = func();
+                    end
+                end
+                if config_table == nil then
+                    local func = handlers[1];
+                    if func ~= nil then
+                        config_table = func(server);
+                    end
+                end
+                if config_table ~= nil then
+                    if type(config_table) == 'table' then
+                        local old_table = vim.lsp.config[server];
+                        local new_table = vim.tbl_deep_extend('force', old_table, config_table)
+                        vim.lsp.config(server, new_table);
+                        -- vim.print("The merged table for " .. server .. " is ", new_table, "what i merged in was:", config_table)
+                    end
+                end
+            end
+
+            vim.lsp.enable(config_servers)
+        end
+
         local mason_lspconfig_opts = {
-            ensure_installed = { "jdtls", "clangd", "lua_ls", "bashls", "omnisharp", "cmake", "asm_lsp" },
-            automatic_installation = true,
+            ensure_installed = auto_servers,
+            automatic_enable = false,
         };
 
         require("mason-lspconfig").setup(mason_lspconfig_opts)
-        require("mason-lspconfig").setup_handlers(handlers)
     end,
-    event = { "BufReadPost", "VeryLazy" }
+    event = { "BufReadPost", "VeryLazy" },
 }

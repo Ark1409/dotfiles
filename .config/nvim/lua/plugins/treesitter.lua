@@ -9,8 +9,14 @@ return {
     config = function(_, opts)
         local configs = require("nvim-treesitter.configs")
         configs.setup(opts)
-        -- vim.wo.foldmethod = 'expr'
-        -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        -- vim.api.nvim_create_autocmd("FileType", {
+        --     callback = function()
+        --         if require("nvim-treesitter.parsers").has_parser() then
+        --             vim.wo.foldmethod = 'expr'
+        --             vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        --         end
+        --     end
+        -- })
     end,
 
     build = function()

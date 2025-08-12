@@ -38,8 +38,11 @@ return {
             },
 
             sources = cmp.config.sources {
-                { name = "nvim_lsp" },
-                { name = "buffer" },
+                {
+                    name = "nvim_lsp",
+                    -- entry_filter = function(entry, ctx) return entry.source.source.client.name ~= 'omnisharp' end -- NO C# autocomplete
+                },
+                { name = "buffer",  },
                 { name = "path" },
                 { name = "git" },
                 { name = "luasnip" },
@@ -53,7 +56,7 @@ return {
                 ["<C-p>"] = cmp.mapping.select_prev_item(),
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                ['<C-Space>'] = cmp.mapping.complete(),
+                -- ['<C-Space>'] = cmp.mapping.complete(),
                 ['<C-X><C-o>'] = cmp.mapping.complete(),
                 ['<C-e>'] = cmp.mapping.abort(),
                 ['<C-y>'] = cmp.mapping.confirm({ select = true }),
@@ -108,5 +111,5 @@ return {
             })
         })
     end,
-    event = { "InsertEnter", "CmdlineEnter" }
+    event = { "InsertEnter", "CmdlineEnter" },
 }

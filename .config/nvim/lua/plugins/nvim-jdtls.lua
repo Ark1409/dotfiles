@@ -15,7 +15,7 @@ return {
                         error("Unable find root dir for java project from " .. vim.fn.bufname(args.buf))
                     end
 
-                    local jdtls_dir = require("mason-registry").get_package("jdtls"):get_install_path()
+                    local jdtls_dir = vim.fn.expand("$MASON/packages/jdtls/")
 
                     local launcher_jar_candidates = vim.fs.find(function(name, _)
                         local jar_prefix = "^org%.eclipse%.equinox%.launcher"

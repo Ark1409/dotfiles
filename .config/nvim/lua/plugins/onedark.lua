@@ -2,7 +2,7 @@ return {
     "navarasu/onedark.nvim",
     priority = 1000,
     opts = {
-        style = "deep",
+        style = "dark",
         transparent = false,
         code_style = {
             keywords = "bold"
@@ -12,7 +12,7 @@ return {
             background = false
         },
         toggle_style_key = "<leader>ots",
-        ending_tildes = true,
+        ending_tildes = false,
         lualine = {
             transparent = false
         },
@@ -25,8 +25,5 @@ return {
         require('onedark').setup(opts)
         require('onedark').load()
     end,
-    cond = function()
-        local TERM = vim.env.TERM
-        return TERM and TERM ~= 'linux'
-    end,
+    cond = not use_alternate_theme,
 }
