@@ -1,0 +1,108 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+" Source your .vimrc
+" source ~/.vimrc
+
+set nocompatible
+set noshowmode
+
+set cursorline
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set smarttab
+set wrap
+
+set ignorecase
+set smartcase
+set showcmd
+set showmatch
+set hlsearch
+set incsearch
+set scrolloff=5
+
+set history=100
+
+set nu
+set rnu
+set signcolumn=yes
+set mouse=a
+
+set list
+set listchars=tab:>-,lead:.,trail:.,multispace:.,nbsp:-
+set sidescroll=1
+set fileformat=unix
+
+set timeout
+set timeoutlen=250
+
+set nrformats=bin,hex,alpha
+
+let mapleader=" "
+let maplocalleader=" "
+
+nnoremap <C-u> <C-u>zz
+nnoremap <C-d> <C-d>zz
+
+let &t_SI = "\e[1 q"
+let &t_EI = "\e[1 q"
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+let g:highlightedyank_highlight_duration = 100
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+set highlightedyank
+set commentary
+set nerdtree
+" set notimeout
+set matchit
+set vim-paragraph-motion
+set surround
+
+" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+map <leader>ff <Action>(ReformatCode)
+map <leader>fo <Action>(OptimizeImports)
+
+nmap grr <Action>(GotoDeclaration)
+map grn <Action>(RenameElement)
+map gra <Action>(ShowIntentionActions)
+nmap gtd <Action>(GotoTypeDeclaration)
+nmap gro <Action>(OptimizeImports)
+nmap gric <Action>(RiderShowIncomingCalls)
+nmap groc <Action>(RiderShowOutgoingCalls)
+nmap gri <Action>(ReSharperGotoImplementation)
+" map [d <Action>(ReSharperGotoPrevErrorInSolution)
+" map ]d <Action>(ReSharperGotoNextErrorInSolution)
+map [d <Action>(GotoPreviousError)
+map ]d <Action>(GotoNextError)
+nmap <C-w>d <Action>(ShowErrorDescription)
+imap <C-y> <Action>(EditorChooseLookupItemReplace)
+imap <C-x><C-o> <Action>(CodeCompletion)
+imap <C-s> <Action>(ParameterInfo.GoToNextSignature)
+nmap <C-W>q <Esc>:q<CR>
+nmap <M-S-E> <Esc>:NERDTree<CR>
+nmap <C-S-C> <Action>(AddClass)
+nmap <leader>ss <Action>(FileStructurePopup)
+nmap <leader>sws <Action>(GotoSymbol)
+nmap <leader><leader> <Action>(RecentChangedFiles)
+nmap <leader>sf <Action>(GotoFile)
+nmap <leader>sG <Action>(TextSearchAction)
+nmap grs <Action>(GotoSuperMethod)
+
+nnoremap <Tab> >>
+nnoremap <S-Tab> <<
+xnoremap <Tab> >gv
+xnoremap <S-Tab> <gv
+
+nnoremap <Esc> <Esc>:nohlsearch<CR>
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)
