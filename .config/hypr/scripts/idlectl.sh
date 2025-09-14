@@ -25,9 +25,9 @@ case "$1" in
         ;;
     3)
         hyprctl dispatch dpms off &
-        loginctl lock-session
         ;;
     4)
+        loginctl lock-session
         systemctl suspend
         ;;
     *)
