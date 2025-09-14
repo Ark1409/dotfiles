@@ -13,7 +13,11 @@ return {
                                 package_pending = "➜",
                                 package_uninstalled = "✗"
                             }
-                        }
+                        },
+                        registries = {
+                            "github:mason-org/mason-registry",
+                            "github:Crashdummyy/mason-registry",
+                        },
                     },
                     config = function(_, opts)
                         require("mason").setup(opts)
@@ -110,8 +114,10 @@ return {
                                 local global_conf = vim.diagnostic.config()
                                 valid_line_diags = vim.iter(line_diags):filter(function(diag)
                                     local namespace_conf = vim.diagnostic.config(nil, diag.namespace)
-                                    if namespace_conf and namespace_conf.virtual_text ~= nil then return not namespace_conf.virtual_text end
-                                    if global_conf and global_conf.virtual_text ~= nil then return not global_conf.virtual_text end
+                                    if namespace_conf and namespace_conf.virtual_text ~= nil then return not
+                                        namespace_conf.virtual_text end
+                                    if global_conf and global_conf.virtual_text ~= nil then return not global_conf
+                                        .virtual_text end
                                     return false
                                 end):totable()
                             end
@@ -125,6 +131,24 @@ return {
                         group = lsp_buf_augroup,
                         callback = function(args2)
                             vim.diagnostic.reset(diag_namespace, args2.buf)
+                        end,
+                        buffer = args.buf
+                    })
+
+                    vim.api.nvim_create_autocmd({ "InsertLeave", "CursorHold", "BufEnter" }, {
+                        group = lsp_buf_augroup,
+                        callback = function(args2)
+                            vim.lsp.codelens.refresh({ bufnr = args2.buf });
+                        end,
+                        buffer = args.buf
+                    })
+
+                    vim.api.nvim_create_autocmd({ "BufEnter" }, {
+                        group = lsp_buf_augroup,
+                        callback = function(args2)
+                            vim.lsp.inlay_hint.enable(true, {
+                                bufnr = args2.buf
+                            });
                         end,
                         buffer = args.buf
                     })
@@ -284,12 +308,49 @@ return {
                         }
                     }
                 }
+            end,
+            ["roslyn"] = function()
+                return {
+                    capabilities = cap,
+                    root_markers = { ".slnf", ".sln", ".csproj", "omnisharp.json", "function.json" },
+                    settings = {
+                        ['csharp|inlay_hints'] = {
+                            csharp_enable_inlay_hints_for_implicit_object_creation = true,
+                            csharp_enable_inlay_hints_for_implicit_variable_types = true,
+                            csharp_enable_inlay_hints_for_lambda_parameter_types = true,
+                            csharp_enable_inlay_hints_for_types = true,
+                            dotnet_enable_inlay_hints_for_indexer_parameters = true,
+                            dotnet_enable_inlay_hints_for_literal_parameters = true,
+                            dotnet_enable_inlay_hints_for_object_creation_parameters = true,
+                            dotnet_enable_inlay_hints_for_other_parameters = true,
+                            csharp_enable_inlay_hints_for_lambda_parameters = true,
+                            dotnet_suppress_inlay_hints_for_parameters_that_differ_only_by_suffix = true,
+                            dotnet_suppress_inlay_hints_for_parameters_that_match_argument_name = true,
+                            dotnet_suppress_inlay_hints_for_parameters_that_match_method_intent = true,
+                        },
+                        ['csharp|code_lens'] = {
+                            dotnet_enable_references_code_lens = true,
+                            dotnet_enable_tests_code_lens = true,
+                        },
+                        ['csharp|completion'] = {
+                            dotnet_provide_regex_completions = true,
+                            dotnet_show_completion_items_from_unimported_namespaces = true,
+                            dotnet_show_name_completion_suggestions = true,
+                        },
+                        ['csharp|symbol_search'] = {
+                            dotnet_search_reference_assemblies = true,
+                        },
+                        ['csharp|formatting'] = {
+                            dotnet_organize_imports_on_format = true,
+                        }
+                    }
+                }
             end
         };
 
         -- Servers to be automagically installed and configured
-        local auto_servers = { "jdtls", "clangd", "lua_ls", "bashls", "cmake", "asm_lsp", "ts_ls", "eslint", "emmet_language_server",
-            "omnisharp"
+        local auto_servers = { "jdtls", "clangd", "lua_ls", "bashls", "cmake", "asm_lsp", "ts_ls", "eslint",
+            "emmet_language_server",
         };
 
         do
@@ -297,9 +358,12 @@ return {
 
             for server, _ in pairs(handlers) do
                 if type(server) == 'string' then
-                    table.insert(config_servers, server)
+                    if server ~= 'omnisharp' then
+                        table.insert(config_servers, server)
+                    end
                 end
             end
+
 
             for _, server in ipairs(config_servers) do
                 local config_table = nil;
@@ -318,7 +382,7 @@ return {
                 end
                 if config_table ~= nil then
                     if type(config_table) == 'table' then
-                        local old_table = vim.lsp.config[server];
+                        local old_table = vim.lsp.config[server] or {};
                         local new_table = vim.tbl_deep_extend('force', old_table, config_table)
                         vim.lsp.config(server, new_table);
                         -- vim.print("The merged table for " .. server .. " is ", new_table, "what i merged in was:", config_table)

@@ -39,6 +39,8 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 
+vim.opt.nrformats = "bin,octal,hex,alpha"
+
 -- vim.opt.foldlevel = 20
 
 vim.opt.list = true
@@ -120,16 +122,10 @@ do
     end
 end
 
-do
-    local tester = nil
-    if tester then print('yes')
-    else print('no')
-    end
-end
-
 vim.api.nvim_create_autocmd('BufReadCmd', {
     pattern = { "*.osz", "osz" },
     group = vim.api.nvim_create_augroup('zip', { clear = false }),
     command = 'vim#Browse(expand("<amatch>"))',
     desc = "Allow reading osz files as zips"
 })
+
