@@ -1,0 +1,11 @@
+[Unit]
+Description=$HOME/src/tmp directory generator
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/bin/sh -c 'echo "Creating temporary directory..."; tmp_src="$(mktemp -d)"; [ $? == 0 ] && echo "Created temporary directory at $tmp_src" || { echo "Failed to create temporary directory"; exit 1; }; echo "Linking $HOME/src/tmp to temporary directory $tmp_src..."; ln -s -T "$tmp_src" "$HOME/src/tmp" && echo "$tmp_src" > "%t/tmpsrc.dir" || { echo "Failed to link directories"; rm -rf "$tmp_src"; exit 1; }; echo "Directory $HOME/src/tmp successfully linked to $tmp_src."'
+ExecStop=/bin/sh -c 'echo "Removing directory $HOME/src/tmp"; rm -f "$HOME/src/tmp" && { [ -f "%t/tmpsrc.dir" ] && [ -d "$(cat %t/tmpsrc.dir)" ] && { echo "Removing originally generated temporary directory $(cat "%t/tmpsrc.dir")"; rm -r "$(cat %t/tmpsrc.dir)"; } || { echo "Could not find original directory to delete." 1>&2; exit 1; }; }'
+
+[Install]
+WantedBy=default.target
